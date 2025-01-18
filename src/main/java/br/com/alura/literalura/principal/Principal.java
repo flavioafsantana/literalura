@@ -65,7 +65,6 @@ public class Principal {
         System.out.println(ENDERECO + tituloLivro.replace(" ", "+"));
         System.out.println("JSON retornado: " + json);
         try {
-            // Convertendo o JSON da API para um objeto de resposta completo
             var resposta = conversor.obterDados(json, RespostaApi.class);
 
             if (resposta.getResults() == null || resposta.getResults().isEmpty()) {
@@ -73,10 +72,9 @@ public class Principal {
                 return;
             }
 
-            // Iterar sobre os livros retornados e salvar no repositório
             resposta.getResults().forEach(dadosLivro -> {
                 Livro livro = new Livro(dadosLivro);
-                // Atribuir o autor ao livro, se o autor já estiver no banco
+
                 if (dadosLivro.autores() != null && !dadosLivro.autores().isEmpty()) {
                     Autor autor = dadosLivro.autores().get(0);
                     Optional<Autor> autorExistente = repositorioAutor.findByName(autor.getName());
@@ -84,13 +82,12 @@ public class Principal {
                     if (autorExistente.isPresent()) {
                         livro.setAutor(autorExistente.get());
                     } else {
-                        // Caso o autor não exista, você pode escolher criar um novo autor
+
                         repositorioAutor.save(autor);
                         livro.setAutor(autor);
                     }
                 }
 
-                // Agora, você pode salvar o livro no repositório
                 repositorio.save(livro);
                 System.out.println("Livro salvo: " + livro);
             });
@@ -123,17 +120,14 @@ public class Principal {
     private void listarAutoresVivosEmUmDeterminadoAno() {
         System.out.print("Digite o ano desejado: ");
         int ano = leitura.nextInt();
-        leitura.nextLine(); // Consumir a quebra de linha
+        leitura.nextLine();
 
-        // Encontrar todos os autores registrados
         List<Autor> autores = repositorioAutor.findAll();
 
-        // Filtrar autores vivos no ano informado
         autores.stream()
                 .filter(autor -> autor.getBirthYear() <= ano && (autor.getDeathYear() == 0 || autor.getDeathYear() > ano))
                 .forEach(System.out::println);
 
-        // Caso não encontre autores
         if (autores.isEmpty()) {
             System.out.println("Nenhum autor vivo encontrado para o ano especificado.");
         }

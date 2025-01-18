@@ -27,16 +27,13 @@ public class Livro {
 
     public Livro(DadosLivro dadosLivro, Autor autor) {
         this.titulo = dadosLivro.titulo();
-        this.autor = autor;  // Atribui o autor ao livro
+        this.autor = autor;
         this.idioma = Idioma.fromString(String.valueOf(dadosLivro.idioma()));
-        this.downloads = String.valueOf(dadosLivro.downloads());  // Converte downloads para String
+        this.downloads = String.valueOf(dadosLivro.downloads());
     }
 
     public Livro(DadosLivro dadosLivro) {
         this.titulo = dadosLivro.titulo();
-        // Processa o idioma
-        // Não há atribuição de autor aqui, então deve ser atribuído mais tarde
-         // Valor padrão ou definido conforme os dados
         this.downloads = String.valueOf(dadosLivro.downloads());
     }
 
@@ -91,5 +88,4 @@ public class Livro {
                 "Downloads: " + downloads + '\n';
     }
 }
-
 

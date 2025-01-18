@@ -1,21 +1,21 @@
 package br.com.alura.literalura.model;
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 public enum Idioma {
-    PT("pt","Português"),
-    EN("en","Inglês"),
-    ES("es","Espanhol"),
-    FR("fr","Francês"),
-    DE("de","Alemão"),
-    OUTRO("null","Outro");
+    PT("pt"),
+    EN("en"),
+    ES("es"),
+    FR("fr"),
+    DE("de"),
+    OUTRO("null");
 
     private String idiomaApi;
-    private String idiomaTraduzido;
 
-    Idioma(String idiomaApi, String idiomaTraduzido) {
+    Idioma(String idiomaApi) {
         this.idiomaApi = idiomaApi;
-        this.idiomaTraduzido = idiomaTraduzido;
     }
+
+    @JsonCreator
     public static Idioma fromString(String text) {
         for (Idioma idioma : Idioma.values()) {
             if (idioma.idiomaApi.equalsIgnoreCase(text)) {
@@ -23,17 +23,9 @@ public enum Idioma {
             }
 
         }
-        throw new IllegalArgumentException("Idioma não encontrado: " + text);
+        return OUTRO;
     }
-    public static Idioma fromPortugues(String text) {
-        for (Idioma idioma : Idioma.values()) {
-            if (idioma.idiomaApi.equalsIgnoreCase(text)) {
-                return idioma;
-            }
 
-        }
-        throw new IllegalArgumentException("Idioma não encontrado: " + text);
-    }
 
 
 }

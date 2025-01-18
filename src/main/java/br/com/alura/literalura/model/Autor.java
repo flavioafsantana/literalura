@@ -12,21 +12,21 @@ public class Autor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nome", nullable = false)  // Nome da coluna no banco de dados
+    @Column(name = "nome", nullable = false)
     private String name;
 
-    @JsonProperty("birth_year")  // Mapeia corretamente o campo 'birth_year' do JSON para 'birthYear'
+    @JsonProperty("birth_year")
     @Column(name = "nascimento")
     private int birthYear;
 
-    @JsonProperty("death_year")  // Mapeia corretamente o campo 'death_year' do JSON para 'deathYear'
+    @JsonProperty("death_year")
     @Column(name = "falecimento")
     private int deathYear;
 
     @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Livro> livros;  // Relacionamento com a lista de livros
+    private List<Livro> livros;
 
-    // Construtores, getters e setters
+
     public Autor() {}
 
     public Autor(String name, int birthYear, int deathYear) {
@@ -80,7 +80,7 @@ public class Autor {
         return  '\n' + "------- Autor -------" + '\n' +
                 "Nome: " + name + '\n' +
                 "Nascimento: " + birthYear + '\n' +
-                "Falecimento: " + deathYear + "]";
+                "Falecimento: " + deathYear ;
     }
 }
 
